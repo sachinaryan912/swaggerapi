@@ -1,0 +1,244 @@
+swagger: '2.0'
+info:
+  title: BUYBAZAAR API
+  version: 1.0.0
+  description: |
+    This is the official documentation for the BUYBAZAAR API. With this API, you can manage user authentication, retrieve product information, and access various features related to products. Explore the endpoints below to integrate and enhance your BUYBAZAAR platform.
+      **Contributors:**
+      - **Sachin Kumar** ->  sachinsachu1998.ss@gmail.com  
+securityDefinitions:
+  jwt:
+    type: apiKey
+    name: Authorization
+    in: header
+
+paths:
+  /login:
+    post:
+      summary: User Login
+      description: |
+        Authenticate a user by providing valid email and password credentials. Upon successful authentication, a JWT token will be provided in the response.
+      parameters:
+        - in: body
+          name: credentials
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+              password:
+                type: string
+      responses:
+        '200':
+          description: Successful login
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: JWT token for authentication
+
+  /register:
+    post:
+      summary: User Registration
+      description: |
+        Register a new user by providing necessary information, including email, name, phone number, password, and confirmation password.
+      parameters:
+        - in: body
+          name: user
+          required: true
+          schema:
+            type: object
+            properties:
+              email:
+                type: string
+                format: email
+              name:
+                type: string
+              phone:
+                type: string
+              password:
+                type: string
+              confirmPassword:
+                type: string
+              timestamp:
+                type: string
+                format: date-time
+      responses:
+        '200':
+          description: Successful registration
+          schema:
+            type: object
+            properties:
+              token:
+                type: string
+                description: JWT token for authentication
+
+  /updateProfile:
+    patch:
+      summary: Update User Profile
+      description: |
+        Update the user's profile by providing updated information such as name, phone number, or password.
+      parameters:
+        - in: body
+          name: updates
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              phone:
+                type: string
+              password:
+                type: string
+      responses:
+        '200':
+          description: Profile updated successfully
+
+  /products:
+    post:
+      summary: Add a new product
+      description: |
+        Add a new product to the inventory with details, including product name, description, price, and more.
+      parameters:
+        - in: body
+          name: product
+          required: true
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '201':
+          description: Product added successfully
+
+    get:
+      summary: Get all products
+      description: |
+        Retrieve a list of all products available in the inventory.
+      responses:
+        '200':
+          description: A list of products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+
+  /products/{id}:
+    get:
+      summary: Get a product by ID
+      description: |
+        Retrieve detailed information about a specific product using its unique identifier.
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        '200':
+          description: A single product
+          schema:
+            $ref: '#/definitions/Product'
+
+    delete:
+      summary: Delete a product by ID
+      description: |
+        Remove a product from the inventory based on its unique identifier.
+      parameters:
+        - in: path
+          name: id
+          type: integer
+          required: true
+      responses:
+        '204':
+          description: Product deleted successfully
+
+  /featuredProducts:
+    get:
+      summary: Get featured products
+      description: |
+        Retrieve a list of featured products that are highlighted for promotional purposes.
+      responses:
+        '200':
+          description: A list of featured products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+
+  /topProducts:
+    get:
+      summary: Get top-rated products
+      description: |
+        Retrieve a list of top-rated products based on customer ratings.
+      responses:
+        '200':
+          description: A list of top-rated products
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+
+  /crousels:
+    get:
+      summary: Get products for carousels
+      description: |
+        Retrieve a list of products suitable for carousel displays on the website.
+      responses:
+        '200':
+          description: A list of products for carousels
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+
+  /topBrands:
+    get:
+      summary: Get top brands
+      description: |
+        Retrieve a list of top brands based on the popularity of their products.
+      responses:
+        '200':
+          description: A list of top brands
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+
+  /newArrivals:
+    get:
+      summary: Get new arrivals
+      description: |
+        Retrieve a list of the latest products that have recently been added to the inventory.
+      responses:
+        '200':
+          description: A list of new arrivals
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+
+definitions:
+  Product:
+    type: object
+    properties:
+      productName:
+        type: string
+        description: The name of the product.
+      description:
+        type: string
+        description: A detailed description of the product.
+      imageUrl:
+        type: string
+        description: The URL of the product image.
+      price:
+        type: number
+        format: double
+        description: The price of the product.
+      category:
+        type: string
+        description: The category to which the product belongs.
+      subcategory:
+        type: string
+        description: The subcategory within the main categor
