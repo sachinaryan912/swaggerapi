@@ -1,0 +1,41 @@
+parameters:
+    Syy-Correlation-Id:
+      name: Syy-Correlation-Id
+      in: header
+      required: true
+      description: |
+        The correlation id header (Syy-Correlation-Id) is a custom HTTP request header used within Sysco APIs. The purpose of this header is to easily track an event chain or a transaction.
+      schema:
+        type: string
+      example: GKY7oDhpSiKY_gAAAABZ_A
+
+    Syy-Request-Id:
+      name: Syy-Request-Id
+      in: header
+      required: true
+      description: |
+        The request id header (Syy-Request-Id) is a custom HTTP request header used within Sysco APIs. The purpose of this header is to uniquely identify every HTTP request involved in operation processing.
+      schema:
+        type: string
+      example: GKY7oDhpSiKY_gAAAABZ_A
+
+    Syy-Sales-Channel:
+      name: Syy-Sales-Channel
+      in: header
+      required: true
+      description: |
+        Sales channels are owned by retailers and represent a specific consumer segment being addressed with a specific product assortment that is offered via CFA retailer catalogs to consumers.
+      schema:
+        type: string
+      example: 52b96501-0f8d-43e7-82aa-8a96fab134d7
+
+    Syy-device-Type:
+      name: Syy-device-Type
+      in: header
+      required: true
+      description: |
+        There are also use cases for steering customer experience (incl. features and content) depending on device type. Via this header info should be passed-through as generic aspect. Current range is smartphone, tablet, desktop, other.
+      schema :
+        type: string
+        enum: [smartphone, tablet, desktop, other]
+      example: tablet
